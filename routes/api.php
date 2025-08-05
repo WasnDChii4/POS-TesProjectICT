@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BarangAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::prefix('barang')->group(function () {
+    Route::get('/', [BarangAPIController::class, 'index']);
+    Route::get('/{kode}', [BarangAPIController::class, 'show']);
+    Route::post('/', [BarangAPIController::class, 'store']);
+});
+
