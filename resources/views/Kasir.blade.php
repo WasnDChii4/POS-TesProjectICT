@@ -7,13 +7,22 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Kasir</title>
     </head>
-    <div class="container mt-4">
-        <h2>Kasir</h2>
-
+    <div class="container">
+        @if (session('success'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            </script>
+        @endif
+        <h3 class="mb-4">Kasir</h3>
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
-
         <form action="{{ route('kasir.store') }}" method="POST">
             @csrf
             <table class="table table-bordered">
@@ -39,7 +48,6 @@
                     @endforeach
                 </tbody>
             </table>
-
             <h4>Total Harga: <span id="totalHarga">0</span></h4>
             <button type="submit" class="btn btn-primary">Simpan Transaksi</button>
         </form>

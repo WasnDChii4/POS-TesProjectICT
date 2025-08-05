@@ -15,6 +15,9 @@ use App\Http\Controllers\TransaksiController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
+    return view('Dashboard');
+});
 
 Route::prefix('barang')->name('barang.')->group(function () {
     Route::get('/', [BarangController::class, 'index'])->name('index');
@@ -37,8 +40,4 @@ Route::prefix('transaksi')->name('transaksi.')->group(function () {
     Route::get('/history', [TransaksiController::class, 'history'])->name('history');
     Route::get('/restore/{id}', [TransaksiController::class, 'restore'])->name('restore');
     Route::delete('/forceDelete/{id}', [TransaksiController::class, 'forceDelete'])->name('forceDelete');
-});
-
-Route::get('/', function () {
-    return view('Dashboard');
 });
