@@ -37,7 +37,7 @@
             <h2>Daftar Barang</h2>
 
             <div class="d-flex justify-content-between mb-3">
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">+ Tambah Barang</button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">Tambah Barang</button>
                 <a href="{{ route('barang.history') }}" class="btn btn-secondary">Lihat Riwayat</a>
             </div>
 
