@@ -23,7 +23,7 @@
         <h2>Riwayat Barang Dihapus</h2>
 
         <div class="mb-3">
-            <a href="{{ route('barang.index') }}" class="btn btn-secondary">← Kembali ke Daftar Barang</a>
+            <a href="{{ route('barang.index') }}" class="btn btn-secondary">Kembali ke Daftar Barang</a>
         </div>
 
         <table class="table table-bordered">
