@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\KasirController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,10 @@ Route::prefix('barang')->name('barang.')->group(function () {
     Route::delete('/forceDelete/{id}', [BarangController::class, 'forceDelete'])->name('forceDelete');
 });
 
+Route::get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
+
+Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+
 Route::get('/', function () {
-    return view('Kasir');
+    return view('Dashboard');
 });

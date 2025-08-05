@@ -44,25 +44,4 @@ class BarangController extends Controller
         Barang::withTrashed()->findOrFail($id)->forceDelete();
         return back()->with('success', 'Barang dihapus permanent');
     }
-
-    public function apiStore(Request $request) {
-        $request->validate([
-            'kode_barang' => 'required|unique:barangs',
-            'nama_barang' => 'required',
-            'harga' => 'required|integer|min:0'
-        ]);
-
-        $barang = Barang::create($request->all());
-        return response()->json(['message' => 'Barang berhasil ditambahkan', 'data' => $barang], 201);
-    }
-
-    public function apiShow($kode) {
-        $barang = Barang::where('kode_barang', $kode)->first();
-
-        if (!$barang) {
-            return response()->json(['message' => 'Barang tidak ditemukan'], 404);
-        }
-
-        return response()->json($barang);
-    }
 }

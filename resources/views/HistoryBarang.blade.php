@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Riwayat Barang Dihapus</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body class="p-4">
+@extends('LayoutNavbar')
+
+@section('content')
+    <head>
+        <meta charset="UTF-8">
+        <title>Riwayat Barang Dihapus</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </head>
     <div class="container">
         @if (session('success'))
             <script>
@@ -19,13 +19,10 @@
                 });
             </script>
         @endif
-
         <h2>Riwayat Barang Dihapus</h2>
-
         <div class="mb-3">
             <a href="{{ route('barang.index') }}" class="btn btn-secondary">Kembali ke Daftar Barang</a>
         </div>
-
         <table class="table table-bordered">
             <thead class="table-light">
                 <tr>
@@ -60,5 +57,4 @@
             </tbody>
         </table>
     </div>
-</body>
-</html>
+@endsection
