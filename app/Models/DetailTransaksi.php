@@ -11,8 +11,9 @@ class DetailTransaksi extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'tanggal',
-        'total_barang',
-        'total_harga'
+        'transaksi_id',
+        'barang_id',
+        'harga',
+        'jumlah'
     ];
 }

@@ -25,9 +25,12 @@ Route::prefix('barang')->name('barang.')->group(function () {
     Route::delete('/forceDelete/{id}', [BarangController::class, 'forceDelete'])->name('forceDelete');
 });
 
-Route::get('/kasir', [KasirController::class, 'index'])->name('kasir.index');
+Route::prefix('kasir')->name('kasir.')->group(function () {
+    Route::get('/', [KasirController::class, 'index'])->name('index');
+    Route::post('/', [KasirController::class, 'store'])->name('store');
+});
 
-Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+Route::resource('transaksi', TransaksiController::class)->only(['index', 'store']);
 
 Route::get('/', function () {
     return view('Dashboard');
