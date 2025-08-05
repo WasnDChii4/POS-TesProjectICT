@@ -16,4 +16,8 @@ class DetailTransaksi extends Model
         'harga',
         'jumlah'
     ];
+
+    public function barang() {
+        return $this->belongsTo(Barang::class);
+    }
 }

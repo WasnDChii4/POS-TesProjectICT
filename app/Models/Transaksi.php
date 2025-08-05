@@ -15,4 +15,8 @@ class Transaksi extends Model
         'total_barang',
         'total_harga'
     ];
+
+    public function detailTransaksis() {
+        return $this->hasMany(DetailTransaksi::class);
+    }
 }

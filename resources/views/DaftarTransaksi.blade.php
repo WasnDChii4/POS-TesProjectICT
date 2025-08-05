@@ -19,6 +19,7 @@
                 });
             </script>
         @endif
+
         <h3>Daftar Transaksi</h3>
         <div class="d-flex justify-content-between mb-4">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahTransaksi">Tambah Transaksi</button>
@@ -52,7 +53,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <button type="button" class="btn btn-secondary" id="tambah">Tambah Barang</button>
                         </div>
                         <div class="modal-footer">
@@ -69,7 +69,7 @@
                     <th>Tanggal</th>
                     <th>Total Barang</th>
                     <th>Total Harga</th>
-                    <th></th>
+                    <th>More</th>
                 </tr>
             </thead>
             <tbody>
@@ -80,7 +80,10 @@
                     <td>{{ $trx->total_barang }}</td>
                     <td>Rp {{ number_format($trx->total_harga, 0, ',', '.') }}</td>
                     <td>
-                        <form action="{{ route('transaksi.destroy', $trx->id) }}" method="POST" onsubmit="return confirm('Yakin hapus transaksi ini?')">
+                        <button type="button" class="btn btn-sm btn-info text-white" data-bs-toggle="modal" data-bs-target="#detailModal{{ $trx->id }}">
+                            Detail
+                        </button>
+                        <form action="{{ route('transaksi.destroy', $trx->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus transaksi ini?')">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-sm btn-danger">Hapus</button>
@@ -88,12 +91,51 @@
                     </td>
                 </tr>
                 @empty
-                    <tr>
-                        <td colspan="5" class="text-center">Tidak ada data transaksi</td>
-                    </tr>
+                <tr>
+                    <td colspan="5" class="text-center">Tidak ada data transaksi</td>
+                </tr>
                 @endforelse
             </tbody>
         </table>
+        @foreach($transaksis as $trx)
+        <div class="modal fade" id="detailModal{{ $trx->id }}" tabindex="-1" aria-labelledby="detailModalLabel{{ $trx->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="detailModalLabel{{ $trx->id }}">Detail Transaksi</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Tanggal:</strong> {{ $trx->created_at->format('d-m-Y H:i:s') }}</p>
+                        <p><strong>Total Barang:</strong> {{ $trx->total_barang }}</p>
+                        <p><strong>Total Harga:</strong> Rp {{ number_format($trx->total_harga, 0, ',', '.') }}</p>
+
+                        <h6>Daftar Barang:</h6>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nama Barang</th>
+                                    <th>Harga</th>
+                                    <th>Jumlah</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($trx->detailTransaksis as $detail)
+                                <tr>
+                                    <td>{{ $detail->barang->nama_barang }}</td>
+                                    <td>Rp {{ number_format($detail->harga, 0, ',', '.') }}</td>
+                                    <td>{{ $detail->jumlah }}</td>
+                                    <td>Rp {{ number_format($detail->harga * $detail->jumlah, 0, ',', '.') }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
     </div>
 @endsection
 

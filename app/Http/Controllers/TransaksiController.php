@@ -10,7 +10,7 @@ use App\Models\DetailTransaksi;
 class TransaksiController extends Controller
 {
     public function index() {
-        $transaksis = Transaksi::latest()->get();
+        $transaksis = Transaksi::with('detailTransaksis.barang')->get();
         $barangs = Barang::all();
         return view('DaftarTransaksi', compact('transaksis', 'barangs'));
     }

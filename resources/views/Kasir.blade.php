@@ -32,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($barangs as $barang)
+                    @forelse ($barangs as $barang)
                     <tr>
                         <td>
                             {{ $barang->nama_barang }}
@@ -42,7 +42,11 @@
                         <td><input type="number" name="jumlah[]" class="form-control jumlah" min="0" value="0"></td>
                         <td class="total-per-barang">0</td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="5" class="text-center">Tidak ada data barang</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
             <h4>Total Harga: <span id="totalHarga">0</span></h4>

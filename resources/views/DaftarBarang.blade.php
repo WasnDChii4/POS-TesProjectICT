@@ -71,7 +71,7 @@
                     <th>Kode</th>
                     <th>Nama</th>
                     <th>Harga</th>
-                    <th></th>
+                    <th>More</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,7 +85,7 @@
                             <form action="{{ route('barang.destroy', $barang->id) }}" method="POST" style="display:inline">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus barang ini?')">Hapus</button>
+                                <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus barang ini?')">Hapus Sementara</button>
                             </form>
                         </td>
                     </tr>
