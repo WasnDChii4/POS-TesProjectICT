@@ -22,5 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('barang')->group(function () {
     Route::get('/', [BarangAPIController::class, 'index']);
     Route::get('/{kode}', [BarangAPIController::class, 'show']);
+    Route::post('/', [BarangAPIController::class, 'store']);
 });
 
