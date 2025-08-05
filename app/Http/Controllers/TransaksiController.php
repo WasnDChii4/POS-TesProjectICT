@@ -15,8 +15,32 @@ class TransaksiController extends Controller
         return view('DaftarTransaksi', compact('transaksis', 'barangs'));
     }
 
-    public function store(Request $request)
-    {
+    public function history() {
+        $transaksis = Transaksi::onlyTrashed()->get();
+        return view('HistoryTransaksi', compact('transaksis'));
+    }
+
+    public function destroy($id) {
+        $transaksi = Transaksi::findOrFail($id);
+        $transaksi->delete();
+
+        return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil dihapus');
+    }
+
+    public function restore($id) {
+        $transaksi = Transaksi::withTrashed()->findOrFail($id);
+        $transaksi->restore();
+
+        return redirect()->route('transaksi.history')->with('success', 'Transaksi berhasil dipulihkan');
+    }
+
+    public function forceDelete($id) {
+        $transaksi = Transaksi::onlyTrashed()->where('id', $id)->firstOrFail();
+        $transaksi->forceDelete();
+        return redirect()->back()->with('success', 'Transaksi berhasil dihapus permanen.');
+    }
+
+    public function store(Request $request) {
         $request->validate([
             'barang_id.*' => 'required|exists:barangs,id',
             'jumlah.*' => 'required|integer|min:1',
@@ -33,7 +57,7 @@ class TransaksiController extends Controller
         }
 
         $transaksi = Transaksi::create([
-            'tanggal' => date('Y-m-d H:i:s'), // native PHP
+            'tanggal' => date('Y-m-d H:i:s'),
             'total_barang' => $totalBarang,
             'total_harga' => $totalHarga,
         ]);

@@ -8,14 +8,60 @@
         <title>Daftar Transaksi</title>
     </head>
     <div class="container">
+        @if (session('success'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            </script>
+        @endif
         <h3>Daftar Transaksi</h3>
+        <div class="d-flex justify-content-between mb-4">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahTransaksi">Tambah Transaksi</button>
+            <a href="{{ route('transaksi.history') }}" class="btn btn-secondary">Lihat Riwayat</a>
+        </div>
+        <div class="modal fade" id="modalTambahTransaksi" tabindex="-1" aria-labelledby="modalTambahTransaksiLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form method="POST" action="{{ route('transaksi.store') }}">
+                        @csrf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalTambahTransaksiLabel">Tambah Transaksi</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="produk-list">
+                                <div class="row mb-2 produk-item">
+                                    <div class="col-md-6">
+                                        <select name="barang_id[]" class="form-control" required>
+                                            <option value="">Pilih Barang</option>
+                                            @foreach($barangs as $barang)
+                                            <option value="{{ $barang->id }}">{{ $barang->nama_barang }} - Rp {{ number_format($barang->harga, 0, ',', '.') }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="number" name="jumlah[]" class="form-control" placeholder="Jumlah" required min="1">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-danger remove">Hapus</button>
+                                    </div>
+                                </div>
+                            </div>
 
-        <!-- Tombol buka modal -->
-        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambahTransaksi">
-            Tambah Transaksi
-        </button>
-
-        <!-- Tabel transaksi -->
+                            <button type="button" class="btn btn-secondary" id="tambah">Tambah Barang</button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Simpan Transaksi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -23,60 +69,31 @@
                     <th>Tanggal</th>
                     <th>Total Barang</th>
                     <th>Total Harga</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($transaksis as $index => $trx)
+                @forelse($transaksis as $index => $trx)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $trx->tanggal }}</td>
+                    <td>{{ $trx->created_at->format('d-m-Y H:i:s') }}</td>
                     <td>{{ $trx->total_barang }}</td>
                     <td>Rp {{ number_format($trx->total_harga, 0, ',', '.') }}</td>
+                    <td>
+                        <form action="{{ route('transaksi.destroy', $trx->id) }}" method="POST" onsubmit="return confirm('Yakin hapus transaksi ini?')">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger">Hapus</button>
+                        </form>
+                    </td>
                 </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="5" class="text-center">Tidak ada data transaksi</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
-    </div>
-
-    <!-- Modal Tambah Transaksi -->
-    <div class="modal fade" id="modalTambahTransaksi" tabindex="-1" aria-labelledby="modalTambahTransaksiLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <form method="POST" action="{{ route('transaksi.store') }}">
-                    @csrf
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalTambahTransaksiLabel">Tambah Transaksi</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <div id="produk-list">
-                            <div class="row mb-2 produk-item">
-                                <div class="col-md-6">
-                                    <select name="barang_id[]" class="form-control" required>
-                                        <option value="">Pilih Barang</option>
-                                        @foreach($barangs as $barang)
-                                        <option value="{{ $barang->id }}">{{ $barang->nama_barang }} - Rp {{ number_format($barang->harga, 0, ',', '.') }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="number" name="jumlah[]" class="form-control" placeholder="Jumlah" required min="1">
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="button" class="btn btn-danger remove">Hapus</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="button" class="btn btn-secondary" id="tambah">Tambah Barang</button>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Simpan Transaksi</button>
-                    </div>
-                </form>
-            </div>
-        </div>
     </div>
 @endsection
 

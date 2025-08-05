@@ -31,11 +31,11 @@
             </script>
         @endif
         <h3>Daftar Barang</h3>
-        <div class="d-flex justify-content-between mb-3">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">Tambah Barang</button>
+        <div class="d-flex justify-content-between mb-4">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahBarang">Tambah Barang</button>
             <a href="{{ route('barang.history') }}" class="btn btn-secondary">Lihat Riwayat</a>
         </div>
-        <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modalTambahBarang" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <form method="POST" action="{{ route('barang.store') }}" class="modal-content">
                     @csrf
@@ -71,7 +71,7 @@
                     <th>Kode</th>
                     <th>Nama</th>
                     <th>Harga</th>
-                    <th>Hapus</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -85,7 +85,7 @@
                             <form action="{{ route('barang.destroy', $barang->id) }}" method="POST" style="display:inline">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus barang ini?')">Hapus Sementara</button>
+                                <button class="btn btn-danger btn-sm" onclick="return confirm('Hapus barang ini?')">Hapus</button>
                             </form>
                         </td>
                     </tr>

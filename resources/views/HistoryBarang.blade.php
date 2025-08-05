@@ -19,10 +19,8 @@
                 });
             </script>
         @endif
-        <h2>Riwayat Barang Dihapus</h2>
-        <div class="mb-3">
-            <a href="{{ route('barang.index') }}" class="btn btn-secondary">Kembali ke Daftar Barang</a>
-        </div>
+        <h3>Riwayat Barang Dihapus</h3>
+        <a href="{{ route('barang.index') }}" class="btn btn-primary mb-4">Kembali ke Daftar Barang</a>
         <table class="table table-bordered">
             <thead class="table-light">
                 <tr>
@@ -30,7 +28,7 @@
                     <th>Kode</th>
                     <th>Nama</th>
                     <th>Harga</th>
-                    <th>Aksi</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -41,7 +39,7 @@
                         <td>{{ $barang->nama_barang }}</td>
                         <td>Rp{{ number_format($barang->harga, 0, ',', '.') }}</td>
                         <td>
-                            <a href="{{ route('barang.restore', $barang->id) }}" class="btn btn-warning btn-sm">Restore</a>
+                            <a href="{{ route('barang.restore', $barang->id) }}" class="btn btn-sm btn-success">Restore</a>
                             <form action="{{ route('barang.forceDelete', $barang->id) }}" method="POST" style="display:inline" onsubmit="return confirm('Hapus permanen?')">
                                 @csrf
                                 @method('DELETE')
