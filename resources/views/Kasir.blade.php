@@ -20,9 +20,6 @@
             </script>
         @endif
         <h3 class="mb-4">Kasir</h3>
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
         <form action="{{ route('kasir.store') }}" method="POST">
             @csrf
             <table class="table table-bordered">

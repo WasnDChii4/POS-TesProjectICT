@@ -15,35 +15,51 @@ class KasirController extends Controller
     }
 
     public function store(Request $request) {
-        $request->validate([
-            'barang_id.*' => 'required|exists:barangs,id',
-            'jumlah.*' => 'required|integer|min:1',
-        ]);
+        $barangIds = $request->barang_id;
+        $jumlahs = $request->jumlah;
 
         $totalBarang = 0;
         $totalHarga = 0;
 
-        foreach ($request->barang_id as $i => $id) {
-            $jumlah = $request->jumlah[$i];
+        $detailTransaksis = [];
+
+        foreach ($barangIds as $i => $id) {
+            if (!$id || !isset($jumlahs[$i]) || $jumlahs[$i] < 1) {
+                continue;
+            }
+
             $barang = Barang::find($id);
+            if (!$barang) {
+                continue;
+            }
+
+            $jumlah = $jumlahs[$i];
             $totalBarang += $jumlah;
             $totalHarga += $barang->harga * $jumlah;
+
+            $detailTransaksis[] = [
+                'barang_id' => $id,
+                'harga' => $barang->harga,
+                'jumlah' => $jumlah,
+            ];
+        }
+
+        if (empty($detailTransaksis)) {
+            return redirect()->back()->with('error', 'Tidak ada data transaksi yang valid.');
         }
 
         $transaksi = Transaksi::create([
+            'tanggal' => now(),
             'total_barang' => $totalBarang,
             'total_harga' => $totalHarga,
         ]);
 
-        foreach ($request->barang_id as $i => $id) {
-            $jumlah = $request->jumlah[$i];
-            $barang = Barang::find($id);
-
+        foreach ($detailTransaksis as $detail) {
             DetailTransaksi::create([
                 'transaksi_id' => $transaksi->id,
-                'barang_id' => $id,
-                'harga' => $barang->harga,
-                'jumlah' => $jumlah,
+                'barang_id' => $detail['barang_id'],
+                'harga' => $detail['harga'],
+                'jumlah' => $detail['jumlah'],
             ]);
         }
 
