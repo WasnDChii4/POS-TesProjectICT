@@ -28,7 +28,7 @@
                     <th>Kode</th>
                     <th>Nama</th>
                     <th>Harga</th>
-                    <th></th>
+                    <th>More</th>
                 </tr>
             </thead>
             <tbody>

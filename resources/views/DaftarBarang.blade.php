@@ -33,7 +33,7 @@
         <h3>Daftar Barang</h3>
         <div class="d-flex justify-content-between mb-4">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahBarang">Tambah Barang</button>
-            <a href="{{ route('barang.history') }}" class="btn btn-secondary">Lihat Riwayat</a>
+            <a href="{{ route('barang.history') }}" class="btn btn-secondary">Riwayat Hapus</a>
         </div>
         <div class="modal fade" id="modalTambahBarang" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
             <div class="modal-dialog">

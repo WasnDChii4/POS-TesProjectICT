@@ -17,7 +17,7 @@
                     <th>Tanggal</th>
                     <th>Total Barang</th>
                     <th>Total Harga</th>
-                    <th></th>
+                    <th>More</th>
                 </tr>
             </thead>
             <tbody>

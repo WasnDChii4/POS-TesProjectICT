@@ -23,7 +23,7 @@
         <h3>Daftar Transaksi</h3>
         <div class="d-flex justify-content-between mb-4">
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahTransaksi">Tambah Transaksi</button>
-            <a href="{{ route('transaksi.history') }}" class="btn btn-secondary">Lihat Riwayat</a>
+            <a href="{{ route('transaksi.history') }}" class="btn btn-secondary">Riwayat Hapus</a>
         </div>
         <div class="modal fade" id="modalTambahTransaksi" tabindex="-1" aria-labelledby="modalTambahTransaksiLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
